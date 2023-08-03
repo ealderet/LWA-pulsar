@@ -28,7 +28,7 @@ $$\text{rfifind -time 30.0 -o <sub_filename> <filename>}$$
 
 ### prepfold
 prepfold is what we use to fold our timeseries data and find our pulsar. An example of running prepfold is below.
-$$	ext{prepfold -psr <pulsar_name_no_B> -slow -dm <DM_value> -mask <rfi_mask> <filename>}$$
+$$\text{prepfold -psr <pulsar_name_no_B> -slow -dm <DM_value> -mask <rfi_mask> <filename>}$$
 Breaking it down:
 1. <pulsar_name_no_B> is the same name you gave to writePsrfits2FromHDF5.py, but without the 'B' at the front.
 2. -slow makes prepfold search more finely. I would recommend leaving this on.
@@ -45,7 +45,7 @@ pulsar_search.py requires both downselect.py and grab.py to work. If you're usin
 
 ### Example
 This is an example of what I run while in the lwaproject/lsl:pulsar container
-$$	ext{/data/scripts/pulsar_search.py -s B0834+06 -e 26.7 -rfi True -n B0834+06 -t 30.0},$$
+$$\text{/data/scripts/pulsar_search.py -s B0834+06 -e 26.7 -rfi True -n B0834+06 -t 30.0},$$
 where
 1. -s is the pulsar name
 2. -e is the rough DM
