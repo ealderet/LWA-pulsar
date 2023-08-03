@@ -1,8 +1,7 @@
-This README will be broken into 3 parts:
+This README will be broken into two parts:
 
 1. Explaining PRESTO and the processing pipeline
 2. Explaining pulsar_search.py
-3. Explaining pulsar_search.py's dependencies
 
 # PRESTO and the processing pipeline
 ### downselect.py
