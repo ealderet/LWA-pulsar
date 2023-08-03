@@ -7,7 +7,11 @@ This README will be broken into 3 parts:
 # PRESTO and the processing pipeline
 ### downselect.py
 When given a raw HDF5 file from OVRO-LWA, the first thing you have to do is run downselect.py to select the frequency range you want. The original raw files have a frequency range of -11MHz to 86MHz. PRESTO really, really doesn't like the negative frequencies, so at the very least get rid of those. I would recommend a frequency range of 35MHz to 80MHz for most pulsars, but that can be changed if necessary. An example run of downselect.py is:
-$$	ext{downselect.py -p -s 35,80 1 fileName}$$
+
+
+downselect.py -p -s 35,80 1 fileName
+
+
 "-p" removes some flagging, the "1" after the selected frequencies is required.
 
 ### writePsrfits2FromHDF5.py
@@ -16,19 +20,31 @@ After running downselect.py, you want to convert the HDF5 file to PSRFITS with w
 Before converting, we have to remove line 52, "station = station.decode()", and line 61, "sourceName = sourceName.decode()". If we don't remove these lines, we get an error saying "str attribute has no option 'decode'." Removing these lines gets rid of the error and still allows the script to run as normal. I am unsure why these were added in the first place.
 #### Converting files
 An example of running writePsrfits2FromHDF5.py is below
-$$\text{writePsrfits2FromHDF5.py -p pulsarName fileName},$$
+
+
+writePsrfits2FromHDF5.py -p pulsarName fileName,
+
+
 where pulsarName is the name of your pulsar in the Besselian epoch (B0834+06 as an example). The 'B' is required.
 
 Now that we have a .fits file, we can either go straight to folding our pulsar data, or we can do some RFI masking with rfifind.
 
 ### rfifind
 rfifind is fairly straightforward, you can read the PRESTO documentation to get a better understanding of how it masks RFI. An example of running rfifind is given below
-$$\text{rfifind -time 30.0 -o subFileName fileName}$$
+
+
+rfifind -time 30.0 -o subFileName fileName
+
+
 subFileName is the prefix you want the files created by rfifind to start with. I usually do the name of my source. The time can be changed if you find that rfifind is masking too much or too little, it defaults to 30 if the option isn't specified. For higher DM pulsars, I've found that leaving it at 30 is best, but again this is subject to your object.
 
 ### prepfold
 prepfold is what we use to fold our timeseries data and find our pulsar. An example of running prepfold is below.
-$$\text{prepfold -psr pulsarNameNoB -slow -dm DMvalue -mask rfiMask fileName}$$
+
+
+prepfold -psr pulsarNameNoB -slow -dm DMvalue -mask rfiMask fileName
+
+
 Breaking it down:
 1. pulsarNameNoB is the same name you gave to writePsrfits2FromHDF5.py, but without the 'B' at the front.
 2. -slow makes prepfold search more finely. I would recommend leaving this on.
