@@ -8,9 +8,11 @@ This README will be broken into 3 parts:
 ### downselect.py
 When given a raw HDF5 file from OVRO-LWA, the first thing you have to do is run downselect.py to select the frequency range you want. The original raw files have a frequency range of -11MHz to 86MHz. PRESTO really, really doesn't like the negative frequencies, so at the very least get rid of those. I would recommend a frequency range of 35MHz to 80MHz for most pulsars, but that can be changed if necessary. An example run of downselect.py is:
 
+----------------------------
 
 downselect.py -p -s 35,80 1 fileName
 
+----------------------------
 
 "-p" removes some flagging, the "1" after the selected frequencies is required.
 
@@ -21,9 +23,11 @@ Before converting, we have to remove line 52, "station = station.decode()", and 
 #### Converting files
 An example of running writePsrfits2FromHDF5.py is below
 
+----------------------------
 
 writePsrfits2FromHDF5.py -p pulsarName fileName,
 
+----------------------------
 
 where pulsarName is the name of your pulsar in the Besselian epoch (B0834+06 as an example). The 'B' is required.
 
@@ -32,18 +36,22 @@ Now that we have a .fits file, we can either go straight to folding our pulsar d
 ### rfifind
 rfifind is fairly straightforward, you can read the PRESTO documentation to get a better understanding of how it masks RFI. An example of running rfifind is given below
 
+----------------------------
 
 rfifind -time 30.0 -o subFileName fileName
 
+----------------------------
 
 subFileName is the prefix you want the files created by rfifind to start with. I usually do the name of my source. The time can be changed if you find that rfifind is masking too much or too little, it defaults to 30 if the option isn't specified. For higher DM pulsars, I've found that leaving it at 30 is best, but again this is subject to your object.
 
 ### prepfold
 prepfold is what we use to fold our timeseries data and find our pulsar. An example of running prepfold is below.
 
+----------------------------
 
 prepfold -psr pulsarNameNoB -slow -dm DMvalue -mask rfiMask fileName
 
+----------------------------
 
 Breaking it down:
 1. pulsarNameNoB is the same name you gave to writePsrfits2FromHDF5.py, but without the 'B' at the front.
@@ -62,9 +70,11 @@ pulsar_search.py requires both downselect.py and grab.py to work. If you're usin
 ### Example
 This is an example of what I run while in the lwaproject/lsl:pulsar container
 
+----------------------------
 
 /data/scripts/pulsar_search.py -s B0834+06 -e 26.7 -rfi True -n B0834+06 -t 30.0,
 
+----------------------------
 
 where
 1. -s is the pulsar name
