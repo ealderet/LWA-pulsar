@@ -45,7 +45,11 @@ pulsar_search.py requires both downselect.py and grab.py to work. If you're usin
 
 ### Example
 This is an example of what I run while in the lwaproject/lsl:pulsar container
-$$\text{/data/scripts/pulsar_search.py -s B0834+06 -e 26.7 -rfi True -n B0834+06 -t 30.0},$$
+
+
+/data/scripts/pulsar_search.py -s B0834+06 -e 26.7 -rfi True -n B0834+06 -t 30.0,
+
+
 where
 1. -s is the pulsar name
 2. -e is the rough DM
