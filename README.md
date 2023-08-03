@@ -16,19 +16,19 @@ After running downselect.py, you want to convert the HDF5 file to PSRFITS with w
 Before converting, we have to remove line 52, "station = station.decode()", and line 61, "sourceName = sourceName.decode()". If we don't remove these lines, we get an error saying "str attribute has no option 'decode'." Removing these lines gets rid of the error and still allows the script to run as normal. I am unsure why these were added in the first place.
 #### Converting files
 An example of running writePsrfits2FromHDF5.py is below
-$$\text{writePsrfits2FromHDF5.py -p <pulsar_name> <filename>},$$
+$$\text{writePsrfits2FromHDF5.py -p pulsar_name filename},$$
 where <pulsar_name> is the name of your pulsar in the Besselian epoch (B0834+06 as an example). The 'B' is required.
 
 Now that we have a .fits file, we can either go straight to folding our pulsar data, or we can do some RFI masking with rfifind.
 
 ### rfifind
 rfifind is fairly straightforward, you can read the PRESTO documentation to get a better understanding of how it masks RFI. An example of running rfifind is given below
-$$\text{rfifind -time 30.0 -o <sub_filename> <filename>}$$
+$$\text{rfifind -time 30.0 -o sub_filename filename}$$
 <sub_filename> is the prefix you want the files created by rfifind to start with. I usually do the name of my source. The time can be changed if you find that rfifind is masking too much or too little, it defaults to 30 if the option isn't specified. For higher DM pulsars, I've found that leaving it at 30 is best, but again this is subject to your object.
 
 ### prepfold
 prepfold is what we use to fold our timeseries data and find our pulsar. An example of running prepfold is below.
-$$\text{prepfold -psr <pulsar_name_no_B> -slow -dm <DM_value> -mask <rfi_mask> <filename>}$$
+$$\text{prepfold -psr pulsar_name_no_B -slow -dm DM_value -mask rfi_mask filename}$$
 Breaking it down:
 1. <pulsar_name_no_B> is the same name you gave to writePsrfits2FromHDF5.py, but without the 'B' at the front.
 2. -slow makes prepfold search more finely. I would recommend leaving this on.
