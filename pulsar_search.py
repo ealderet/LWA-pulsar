@@ -115,7 +115,7 @@ def main(args):
     # RFI yes/no
     if args.rfibool is True:
         # Run rfifind
-        os.system(f"rfifind -o {args.subname} *.fits")
+        os.system(f"rfifind -time [args.rfitime] -o {args.subname} *.fits")
         
         # Run prepfold with RFI mask
         os.system(f"prepfold -psr {noB_source} -slow -dm {args.dm} -mask *.mask *.fits")
@@ -145,15 +145,13 @@ if __name__ == '__main__':
                         help='filename process - metadata or DRX')
     parser.add_argument('-s', '--source', type=str,
                         help='source name')
-    parser.add_argument('-r', '--ra', type=aph.hours,
-                        help='right ascension; HH:MM:SS.SS, J2000')
-    parser.add_argument('-d', '--dec', type=aph.degrees,
-                        help='declination; sDD:MM:SS.S, J2000')
     parser.add_argument('-e', '--dm', type=float,
                         help='dispersion measure; pc/cm^3')
     parser.add_argument('-rfi', '--rfibool', type=bool,
                         help='decide if rfi flagging should happen')
     parser.add_argument('-n', '--subname', type=str,
                         help='name for subfiles created along the way')
+    parser.add_argument('-t', '--rfitime', type=float,
+                        help='time for rfifind')
     args = parser.parse_args()
     main(args)
